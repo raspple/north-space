@@ -23,14 +23,14 @@ export default function Contact() {
     setStatus('submitting');
     setErrorMsg('');
 
-    const { data, error } = await supabase.from('enquiries').insert({
+    const { error } = await supabase.from('enquiries').insert({
       service_type: form.service || 'general',
       name: form.name,
       email: form.email,
       phone: form.phone || null,
       company: form.company || null,
       message: form.message || null,
-    }).select('id').single();
+    });
 
     if (error) {
       setStatus('error');
@@ -43,7 +43,6 @@ export default function Contact() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id: data?.id,
           name: form.name,
           email: form.email,
           phone: form.phone || null,

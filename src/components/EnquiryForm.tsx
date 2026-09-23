@@ -54,7 +54,7 @@ export default function EnquiryForm({ serviceType, defaultLocation = '', buttonT
       payload.office_size = form.office_size || null;
     }
 
-    const { data, error } = await supabase.from('enquiries').insert(payload);
+    const { error } = await supabase.from('enquiries').insert(payload);
 
     if (error) {
       setStatus('error');
@@ -69,7 +69,7 @@ export default function EnquiryForm({ serviceType, defaultLocation = '', buttonT
       fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-enquiry-notification`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...payload, id: data?.id }),
+        body: JSON.stringify(payload),
       }).catch(() => {});
     }
   };
