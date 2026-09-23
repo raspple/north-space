@@ -54,7 +54,7 @@ export default function EnquiryForm({ serviceType, defaultLocation = '', buttonT
       payload.office_size = form.office_size || null;
     }
 
-    const { data, error } = await supabase.from('enquiries').insert(payload).select('id').single();
+    const { data, error } = await supabase.from('enquiries').insert(payload);
 
     if (error) {
       setStatus('error');
