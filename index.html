@@ -11,6 +11,36 @@
   </head>
   <body>
     <div id="root"></div>
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="text" name="bot-field" />
+      <input type="text" name="fullName" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="company" />
+      <select name="serviceInterest">
+        <option value="virtual_office">Virtual Office</option>
+        <option value="meeting_room">Meeting Room</option>
+        <option value="serviced_office">Serviced Office</option>
+        <option value="general">General Enquiry</option>
+      </select>
+      <textarea name="message"></textarea>
+    </form>
+    <form name="enquiry" netlify netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="enquiry" />
+      <input type="text" name="bot-field" />
+      <input type="hidden" name="service-type" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="company" />
+      <input type="text" name="location" />
+      <input type="text" name="mail_handling" />
+      <input type="text" name="people_count" />
+      <input type="text" name="catering" />
+      <input type="text" name="office_size" />
+      <textarea name="message"></textarea>
+    </form>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

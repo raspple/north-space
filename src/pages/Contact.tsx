@@ -1,57 +1,18 @@
 import { useState } from 'react';
-import { supabase } from '../lib/supabase';
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle, Loader2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
 
 export default function Contact() {
   const [form, setForm] = useState({
-    name: '',
+    fullName: '',
     email: '',
     phone: '',
     company: '',
-    service: '',
+    serviceInterest: '',
     message: '',
   });
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('submitting');
-    setErrorMsg('');
-
-    const { error } = await supabase.from('enquiries').insert({
-      service_type: form.service || 'general',
-      name: form.name,
-      email: form.email,
-      phone: form.phone || null,
-      company: form.company || null,
-      message: form.message || null,
-    });
-
-    if (error) {
-      setStatus('error');
-      setErrorMsg('Something went wrong. Please try again or call us directly.');
-    } else {
-      setStatus('success');
-      setForm({ name: '', email: '', phone: '', company: '', service: '', message: '' });
-
-      fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-enquiry-notification`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          phone: form.phone || null,
-          company: form.company || null,
-          service_type: form.service || 'general',
-          message: form.message || null,
-        }),
-      }).catch(() => {});
-    }
   };
 
   return (
@@ -123,127 +84,102 @@ export default function Contact() {
             {/* Form */}
             <div className="lg:col-span-2">
               <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 sm:p-10">
-                {status === 'success' ? (
-                  <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-8 text-center">
-                    <CheckCircle className="w-12 h-12 text-emerald-600 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold text-emerald-900 mb-2">Message Sent</h3>
-                    <p className="text-emerald-700 max-w-md mx-auto">
-                      Thank you for getting in touch. We’ll be in contact within one working day to discuss your workspace needs.
-                    </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-5">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">Full Name *</label>
-                        <input
-                          id="name"
-                          name="name"
-                          type="text"
-                          required
-                          value={form.name}
-                          onChange={handleChange}
-                          className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900"
-                          placeholder="John Smith"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">Email Address *</label>
-                        <input
-                          id="email"
-                          name="email"
-                          type="email"
-                          required
-                          value={form.email}
-                          onChange={handleChange}
-                          className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900"
-                          placeholder="john@company.co.uk"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <div>
-                        <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1">Phone Number</label>
-                        <input
-                          id="phone"
-                          name="phone"
-                          type="tel"
-                          value={form.phone}
-                          onChange={handleChange}
-                          className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900"
-                          placeholder="0191 123 4567"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="company" className="block text-sm font-medium text-slate-700 mb-1">Company Name</label>
-                        <input
-                          id="company"
-                          name="company"
-                          type="text"
-                          value={form.company}
-                          onChange={handleChange}
-                          className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900"
-                          placeholder="Acme Ltd"
-                        />
-                      </div>
-                    </div>
-
+                <form name="contact" method="POST" data-netlify="true" action="/thank-you" className="space-y-5">
+                  <input type="hidden" name="form-name" value="contact" />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label htmlFor="service" className="block text-sm font-medium text-slate-700 mb-1">Service Interest</label>
-                      <select
-                        id="service"
-                        name="service"
-                        value={form.service}
+                      <label htmlFor="fullName" className="block text-sm font-medium text-slate-700 mb-1">Full Name *</label>
+                      <input
+                        id="fullName"
+                        name="fullName"
+                        type="text"
+                        required
+                        value={form.fullName}
                         onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900 bg-white"
-                      >
-                        <option value="">Please select...</option>
-                        <option value="virtual_office">Virtual Office</option>
-                        <option value="meeting_room">Meeting Room</option>
-                        <option value="serviced_office">Serviced Office</option>
-                        <option value="general">General Enquiry</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1">Message</label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        rows={5}
-                        value={form.message}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900 resize-none"
-                        placeholder="How can we help?"
+                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900"
+                        placeholder="John Smith"
                       />
                     </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">Email Address *</label>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        required
+                        value={form.email}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900"
+                        placeholder="john@company.co.uk"
+                      />
+                    </div>
+                  </div>
 
-                    {status === 'error' && (
-                      <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">
-                        {errorMsg}
-                      </div>
-                    )}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1">Phone Number</label>
+                      <input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        value={form.phone}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900"
+                        placeholder="0191 123 4567"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="company" className="block text-sm font-medium text-slate-700 mb-1">Company Name</label>
+                      <input
+                        id="company"
+                        name="company"
+                        type="text"
+                        value={form.company}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900"
+                        placeholder="Acme Ltd"
+                      />
+                    </div>
+                  </div>
 
-                    <button
-                      type="submit"
-                      disabled={status === 'submitting'}
-                      className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-lg bg-brand-700 text-white font-semibold hover:bg-brand-800 disabled:opacity-60 disabled:cursor-not-allowed transition-colors shadow-sm"
+                  <div>
+                    <label htmlFor="serviceInterest" className="block text-sm font-medium text-slate-700 mb-1">Service Interest</label>
+                    <select
+                      id="serviceInterest"
+                      name="serviceInterest"
+                      value={form.serviceInterest}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900 bg-white"
                     >
-                      {status === 'submitting' ? (
-                        <>
-                          <Loader2 className="w-4 h-4 animate-spin" />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4" />
-                          Send Message
-                        </>
-                      )}
-                    </button>
-                  </form>
-                )}
+                      <option value="">Please select...</option>
+                      <option value="virtual_office">Virtual Office</option>
+                      <option value="meeting_room">Meeting Room</option>
+                      <option value="serviced_office">Serviced Office</option>
+                      <option value="general">General Enquiry</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1">Message</label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={5}
+                      value={form.message}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900 resize-none"
+                      placeholder="How can we help?"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-lg bg-brand-700 text-white font-semibold hover:bg-brand-800 disabled:opacity-60 disabled:cursor-not-allowed transition-colors shadow-sm"
+                  >
+                    <Send className="w-4 h-4" />
+                    Send Message
+                  </button>
+                </form>
               </div>
             </div>
           </div>

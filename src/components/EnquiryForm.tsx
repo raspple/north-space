@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { supabase } from '../lib/supabase';
-import { Send, CheckCircle, Loader2 } from 'lucide-react';
+import { Send } from 'lucide-react';
 
 interface EnquiryFormProps {
   serviceType: 'virtual_office' | 'meeting_room' | 'serviced_office';
@@ -21,73 +20,15 @@ export default function EnquiryForm({ serviceType, defaultLocation = '', buttonT
     catering: '',
     office_size: '',
   });
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
-  const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('submitting');
-    setErrorMsg('');
-
-    const payload: Record<string, unknown> = {
-      service_type: serviceType,
-      name: form.name,
-      email: form.email,
-      phone: form.phone || null,
-      company: form.company || null,
-      location: form.location || null,
-      message: form.message || null,
-    };
-
-    if (serviceType === 'virtual_office') {
-      payload.mail_handling = form.mail_handling || null;
-    }
-    if (serviceType === 'meeting_room') {
-      payload.people_count = form.people_count || null;
-      payload.catering = form.catering === 'yes' ? true : form.catering === 'no' ? false : null;
-    }
-    if (serviceType === 'serviced_office') {
-      payload.office_size = form.office_size || null;
-    }
-
-    const { error } = await supabase.from('enquiries').insert(payload);
-
-    if (error) {
-      setStatus('error');
-      setErrorMsg('Something went wrong. Please try again or contact us directly.');
-    } else {
-      setStatus('success');
-      setForm({
-        name: '', email: '', phone: '', company: '', location: defaultLocation, message: '',
-        mail_handling: '', people_count: '', catering: '', office_size: '',
-      });
-
-      fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-enquiry-notification`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      }).catch(() => {});
-    }
-  };
-
-  if (status === 'success') {
-    return (
-      <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-8 text-center">
-        <CheckCircle className="w-12 h-12 text-emerald-600 mx-auto mb-4" />
-        <h3 className="text-xl font-bold text-emerald-900 mb-2">Enquiry Received</h3>
-        <p className="text-emerald-700 max-w-md mx-auto">
-          Thank you for your enquiry. One of our workspace specialists will be in touch within 24 hours to discuss your requirements.
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form name="enquiry" method="POST" data-netlify="true" action="/thank-you" className="space-y-5">
+      <input type="hidden" name="form-name" value="enquiry" />
+      <input type="hidden" name="service-type" value={serviceType} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">Full Name *</label>
@@ -256,28 +197,12 @@ export default function EnquiryForm({ serviceType, defaultLocation = '', buttonT
         />
       </div>
 
-      {status === 'error' && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">
-          {errorMsg}
-        </div>
-      )}
-
       <button
         type="submit"
-        disabled={status === 'submitting'}
         className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-6 py-3 rounded-lg bg-brand-700 text-white font-semibold hover:bg-brand-800 disabled:opacity-60 disabled:cursor-not-allowed transition-colors shadow-sm"
       >
-        {status === 'submitting' ? (
-          <>
-            <Loader2 className="w-4 h-4 animate-spin" />
-            Submitting...
-          </>
-        ) : (
-          <>
-            <Send className="w-4 h-4" />
-            {buttonText}
-          </>
-        )}
+        <Send className="w-4 h-4" />
+        {buttonText}
       </button>
     </form>
   );

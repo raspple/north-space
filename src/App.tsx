@@ -7,6 +7,7 @@ import MeetingRooms from './pages/MeetingRooms';
 import ServicedOffices from './pages/ServicedOffices';
 import Locations from './pages/Locations';
 import Contact from './pages/Contact';
+import ThankYou from './pages/ThankYou';
 import Admin from './pages/Admin';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path="/serviced-offices" element={<ServicedOffices />} />
             <Route path="/locations" element={<Locations />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/thank-you" element={<ThankYou />} />
             <Route path="/admin" element={<Admin />} />
           </Routes>
         </main>
