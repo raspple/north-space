@@ -1,10 +1,17 @@
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
 };
 
 const RECIPIENT_EMAIL = "louisehall538@gmail.com";
+
+const escapeHtml = (value: unknown): string => String(value ?? "—")
+  .replace(/&/g, "&amp;")
+  .replace(/</g, "&lt;")
+  .replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;")
+  .replace(/'/g, "&#039;");
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
@@ -35,24 +42,36 @@ Deno.serve(async (req: Request) => {
     };
 
     const serviceLabel = serviceLabels[service_type] || "General Enquiry";
+    const safe = {
+      name: escapeHtml(name),
+      email: escapeHtml(email),
+      phone: escapeHtml(phone),
+      company: escapeHtml(company),
+      serviceLabel: escapeHtml(serviceLabel),
+      location: escapeHtml(location),
+      mailHandling: escapeHtml(mail_handling),
+      peopleCount: escapeHtml(people_count),
+      officeSize: escapeHtml(office_size),
+      message: escapeHtml(message).replace(/\n/g, "<br />"),
+    };
 
     const rows: string[] = [
-      `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;width:140px;">Name</td><td style="padding:8px 12px;color:#475569;">${name ?? "—"}</td></tr>`,
-      `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Email</td><td style="padding:8px 12px;color:#475569;">${email ?? "—"}</td></tr>`,
-      `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Phone</td><td style="padding:8px 12px;color:#475569;">${phone || "—"}</td></tr>`,
-      `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Company</td><td style="padding:8px 12px;color:#475569;">${company || "—"}</td></tr>`,
-      `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Service</td><td style="padding:8px 12px;color:#475569;">${serviceLabel}</td></tr>`,
-      `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Location</td><td style="padding:8px 12px;color:#475569;">${location || "—"}</td></tr>`,
+      `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;width:140px;">Name</td><td style="padding:8px 12px;color:#475569;">${safe.name}</td></tr>`,
+      `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Email</td><td style="padding:8px 12px;color:#475569;">${safe.email}</td></tr>`,
+      `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Phone</td><td style="padding:8px 12px;color:#475569;">${safe.phone}</td></tr>`,
+      `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Company</td><td style="padding:8px 12px;color:#475569;">${safe.company}</td></tr>`,
+      `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Service</td><td style="padding:8px 12px;color:#475569;">${safe.serviceLabel}</td></tr>`,
+      `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Location</td><td style="padding:8px 12px;color:#475569;">${safe.location}</td></tr>`,
     ];
 
     if (mail_handling) {
       rows.push(
-        `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Mail Handling</td><td style="padding:8px 12px;color:#475569;">${mail_handling}</td></tr>`,
+        `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Mail Handling</td><td style="padding:8px 12px;color:#475569;">${safe.mailHandling}</td></tr>`,
       );
     }
     if (people_count) {
       rows.push(
-        `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">People</td><td style="padding:8px 12px;color:#475569;">${people_count}</td></tr>`,
+        `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">People</td><td style="padding:8px 12px;color:#475569;">${safe.peopleCount}</td></tr>`,
       );
     }
     if (catering !== undefined && catering !== null) {
@@ -62,12 +81,12 @@ Deno.serve(async (req: Request) => {
     }
     if (office_size) {
       rows.push(
-        `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Office Size</td><td style="padding:8px 12px;color:#475569;">${office_size}</td></tr>`,
+        `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;">Office Size</td><td style="padding:8px 12px;color:#475569;">${safe.officeSize}</td></tr>`,
       );
     }
     if (message) {
       rows.push(
-        `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;vertical-align:top;">Message</td><td style="padding:8px 12px;color:#475569;">${message.replace(/\n/g, "<br />")}</td></tr>`,
+        `<tr><td style="padding:8px 12px;font-weight:bold;color:#334155;vertical-align:top;">Message</td><td style="padding:8px 12px;color:#475569;">${safe.message}</td></tr>`,
       );
     }
 
