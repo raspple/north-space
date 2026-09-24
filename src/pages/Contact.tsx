@@ -192,7 +192,7 @@ export default function Contact() {
                       value={form.message}
                       onChange={handleChange}
                       className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900 resize-none"
-                      placeholder="How can we help?"
+                      placeholder="Tell us about your requirements, preferred locations, timescales and any other details that will help us find suitable workspace options."
                     />
                   </div>
 

@@ -27,6 +27,7 @@ export default function EnquiryForm({ serviceType, defaultLocation = '', buttonT
     meeting_type: '',
     duration: '',
     preferred_date: '',
+    preferred_time: '',
     office_size: '',
     budget: '',
   });
@@ -194,6 +195,40 @@ export default function EnquiryForm({ serviceType, defaultLocation = '', buttonT
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
+              <label htmlFor="preferred_date" className="block text-sm font-medium text-slate-700 mb-1">
+                Preferred Date
+              </label>
+              <input
+                id="preferred_date"
+                name="preferred_date"
+                type="date"
+                value={form.preferred_date}
+                onChange={handleChange}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <label htmlFor="preferred_time" className="block text-sm font-medium text-slate-700 mb-1">
+                Preferred Time
+              </label>
+              <select
+                id="preferred_time"
+                name="preferred_time"
+                value={form.preferred_time}
+                onChange={handleChange}
+                className={selectClass}
+              >
+                <option value="">Please select...</option>
+                <option value="morning">Morning</option>
+                <option value="afternoon">Afternoon</option>
+                <option value="full_day">Full Day</option>
+                <option value="flexible">Flexible</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
               <label htmlFor="people_count" className="block text-sm font-medium text-slate-700 mb-1">
                 Number of Attendees
               </label>
@@ -243,16 +278,16 @@ export default function EnquiryForm({ serviceType, defaultLocation = '', buttonT
                 className={selectClass}
               >
                 <option value="">Please select...</option>
-                <option value="internal">Internal</option>
-                <option value="client">Client</option>
-                <option value="training">Training</option>
+                <option value="internal">Internal meeting</option>
+                <option value="client">Client meeting</option>
+                <option value="training">Training session</option>
                 <option value="interview">Interview</option>
                 <option value="workshop_event">Workshop / Event</option>
               </select>
             </div>
             <div>
               <label htmlFor="duration" className="block text-sm font-medium text-slate-700 mb-1">
-                Duration
+                Duration Required
               </label>
               <select
                 id="duration"
@@ -262,26 +297,12 @@ export default function EnquiryForm({ serviceType, defaultLocation = '', buttonT
                 className={selectClass}
               >
                 <option value="">Please select...</option>
-                <option value="1-2hrs">1 – 2 hrs</option>
+                <option value="1-2hrs">1 – 2 hours</option>
                 <option value="half_day">Half day</option>
                 <option value="full_day">Full day</option>
                 <option value="multiple_days">Multiple days</option>
               </select>
             </div>
-          </div>
-
-          <div>
-            <label htmlFor="preferred_date" className="block text-sm font-medium text-slate-700 mb-1">
-              Preferred Date
-            </label>
-            <input
-              id="preferred_date"
-              name="preferred_date"
-              type="date"
-              value={form.preferred_date}
-              onChange={handleChange}
-              className={inputClass}
-            />
           </div>
         </>
       )}
@@ -308,8 +329,8 @@ export default function EnquiryForm({ serviceType, defaultLocation = '', buttonT
         </div>
       )}
 
-      {/* General fields: urgency + referral source (not for serviced office — urgency already at top) */}
-      {serviceType !== 'serviced_office' && (
+      {/* Urgency + referral source: virtual office only (serviced office has urgency at top, meeting room has preferred date/time instead) */}
+      {serviceType === 'virtual_office' && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
             <label htmlFor="urgency" className="block text-sm font-medium text-slate-700 mb-1">How quickly do you need this?</label>
@@ -347,8 +368,8 @@ export default function EnquiryForm({ serviceType, defaultLocation = '', buttonT
         </div>
       )}
 
-      {/* Referral source for serviced office (urgency already at top) */}
-      {serviceType === 'serviced_office' && (
+      {/* Referral source only: meeting room + serviced office (urgency/date at top) */}
+      {serviceType !== 'virtual_office' && (
         <div>
           <label htmlFor="referral_source" className="block text-sm font-medium text-slate-700 mb-1">How did you hear about us?</label>
           <select
@@ -377,7 +398,7 @@ export default function EnquiryForm({ serviceType, defaultLocation = '', buttonT
           value={form.message}
           onChange={handleChange}
           className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900 resize-none"
-          placeholder="Tell us about your workspace needs..."
+          placeholder="Tell us about your requirements, preferred locations, timescales and any other details that will help us find suitable workspace options."
         />
       </div>
 
