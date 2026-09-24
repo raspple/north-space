@@ -24,6 +24,7 @@
         <option value="serviced_office">Serviced Office</option>
         <option value="general">General Enquiry</option>
       </select>
+      <input type="text" name="location" />
       <select name="urgency">
         <option value="asap">ASAP</option>
         <option value="1_month">Within 1 month</option>
@@ -36,6 +37,60 @@
         <option value="recommendation">Recommendation</option>
         <option value="existing_customer">Existing Customer</option>
         <option value="other">Other</option>
+      </select>
+      <select name="mail_handling">
+        <option value="forward">Mail forwarding required</option>
+        <option value="collect">Collection only</option>
+        <option value="unsure">Not sure yet</option>
+      </select>
+      <select name="company_status">
+        <option value="new">New business</option>
+        <option value="existing">Existing business</option>
+        <option value="not_incorporated">Not yet incorporated</option>
+      </select>
+      <select name="people_count">
+        <option value="1-4">1-4</option>
+        <option value="5-8">5-8</option>
+        <option value="9-16">9-16</option>
+        <option value="17-30">17-30</option>
+        <option value="30+">30+</option>
+      </select>
+      <select name="catering">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
+      <select name="meeting_type">
+        <option value="internal">Internal meeting</option>
+        <option value="client">Client meeting</option>
+        <option value="training">Training session</option>
+        <option value="interview">Interview</option>
+        <option value="workshop_event">Workshop/Event</option>
+      </select>
+      <select name="duration">
+        <option value="1-2hrs">1-2 hours</option>
+        <option value="half_day">Half day</option>
+        <option value="full_day">Full day</option>
+        <option value="multiple_days">Multiple days</option>
+      </select>
+      <input type="date" name="preferred_date" />
+      <select name="preferred_time">
+        <option value="morning">Morning</option>
+        <option value="afternoon">Afternoon</option>
+        <option value="full_day">Full Day</option>
+        <option value="flexible">Flexible</option>
+      </select>
+      <select name="office_size">
+        <option value="1-2">1-2</option>
+        <option value="3-5">3-5</option>
+        <option value="6-10">6-10</option>
+        <option value="10+">10+</option>
+      </select>
+      <select name="budget">
+        <option value="under_250">Under £250</option>
+        <option value="250_500">£250-£500</option>
+        <option value="500_1000">£500-£1,000</option>
+        <option value="1000_plus">£1,000+</option>
+        <option value="unsure">Unsure</option>
       </select>
       <textarea name="message"></textarea>
     </form>
