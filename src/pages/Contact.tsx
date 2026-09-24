@@ -25,6 +25,7 @@ export default function Contact() {
     preferred_time: '',
     office_size: '',
     budget: '',
+    budget_max: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -108,13 +109,22 @@ export default function Contact() {
                         <label htmlFor="budget" className="block text-sm font-medium text-slate-700 mb-1">Budget (per month)</label>
                         <select id="budget" name="budget" value={form.budget} onChange={handleChange} className={selectClass}>
                           <option value="">Please select...</option>
-                          <option value="under_250">Under £250</option>
-                          <option value="250_500">£250 – £500</option>
-                          <option value="500_1000">£500 – £1,000</option>
-                          <option value="1000_plus">£1,000+</option>
+                          <option value="under_250">Under £250/month</option>
+                          <option value="250_500">£250 – £500/month</option>
+                          <option value="500_1000">£500 – £1,000/month</option>
+                          <option value="1000_plus">£1,000+/month</option>
                           <option value="unsure">Unsure</option>
                         </select>
                       </div>
+                    </div>
+                  )}
+
+                  {/* Conditional max budget field when £1,000+/month selected */}
+                  {si === 'serviced_office' && form.budget === '1000_plus' && (
+                    <div>
+                      <label htmlFor="budget_max" className="block text-sm font-medium text-slate-700 mb-1">Maximum Monthly Budget (£)</label>
+                      <input id="budget_max" name="budget_max" type="number" min="0" value={form.budget_max} onChange={handleChange} className={inputClass} placeholder="e.g. 2500" />
+                      <p className="mt-1.5 text-xs text-slate-500">This helps us identify suitable workspace options within your budget.</p>
                     </div>
                   )}
 
