@@ -8,6 +8,7 @@ const locations = [
       "The North's powerhouse for business. From Spinningfields to the Northern Quarter, Manchester offers every type of workspace imaginable.",
     spaces: 45,
     services: ['Virtual Offices', 'Meeting Rooms', 'Serviced Offices'],
+    image: 'https://images.pexels.com/photos/27878164/pexels-photo-27878164.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
   {
     name: 'Leeds',
@@ -15,6 +16,7 @@ const locations = [
       "One of the North's largest financial centres. Extensive choice of Grade A offices, coworking spaces, and corporate meeting facilities.",
     spaces: 32,
     services: ['Virtual Offices', 'Meeting Rooms', 'Serviced Offices'],
+    image: 'https://images.pexels.com/photos/30389574/pexels-photo-30389574.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
   {
     name: 'Newcastle upon Tyne',
@@ -22,6 +24,7 @@ const locations = [
       "The North East's commercial capital. Choose from modern towers on Quayside, creative hubs in Ouseburn, or professional suites in the city centre.",
     spaces: 24,
     services: ['Virtual Offices', 'Meeting Rooms', 'Serviced Offices'],
+    image: 'https://images.pexels.com/photos/35113644/pexels-photo-35113644.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
   {
     name: 'York',
@@ -29,6 +32,7 @@ const locations = [
       'A historic city with a thriving professional and tech scene. Premium addresses for businesses that value heritage and reputation.',
     spaces: 10,
     services: ['Virtual Offices', 'Meeting Rooms', 'Serviced Offices'],
+    image: 'https://images.pexels.com/photos/10569318/pexels-photo-10569318.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
   {
     name: 'Sheffield',
@@ -36,6 +40,7 @@ const locations = [
       "A city reinventing itself with a booming creative and digital sector. Affordable workspace with a strong sense of community and growing investment.",
     spaces: 18,
     services: ['Virtual Offices', 'Meeting Rooms', 'Serviced Offices'],
+    image: 'https://images.pexels.com/photos/12698033/pexels-photo-12698033.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
   {
     name: 'Durham',
@@ -43,6 +48,7 @@ const locations = [
       'A blend of heritage and innovation. Ideal for professional services, education-linked ventures, and businesses seeking a prestigious address.',
     spaces: 12,
     services: ['Virtual Offices', 'Meeting Rooms', 'Serviced Offices'],
+    image: 'https://images.pexels.com/photos/18510493/pexels-photo-18510493.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
   {
     name: 'Sunderland',
@@ -50,6 +56,7 @@ const locations = [
       'A growing digital and creative cluster with excellent transport links. Affordable workspace with strong public and private investment.',
     spaces: 9,
     services: ['Virtual Offices', 'Meeting Rooms', 'Serviced Offices'],
+    image: 'https://images.pexels.com/photos/34957642/pexels-photo-34957642.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
   {
     name: 'Gateshead',
@@ -57,6 +64,7 @@ const locations = [
       'Home to the Sage and Baltic. Modern office developments along the river with easy access to Newcastle city centre.',
     spaces: 7,
     services: ['Virtual Offices', 'Meeting Rooms', 'Serviced Offices'],
+    image: 'https://images.pexels.com/photos/9347431/pexels-photo-9347431.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
   {
     name: 'Middlesbrough',
@@ -64,6 +72,7 @@ const locations = [
       'A resurgent Teesside hub with new commercial developments, strong logistics connectivity, and competitive rates.',
     spaces: 6,
     services: ['Virtual Offices', 'Meeting Rooms', 'Serviced Offices'],
+    image: 'https://images.pexels.com/photos/36802785/pexels-photo-36802785.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
   {
     name: 'Darlington',
@@ -71,6 +80,7 @@ const locations = [
       'A well-connected market town with a growing business community. Great rail links and a steady supply of modern, flexible office space.',
     spaces: 5,
     services: ['Virtual Offices', 'Meeting Rooms', 'Serviced Offices'],
+    image: 'https://images.pexels.com/photos/30404020/pexels-photo-30404020.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
   {
     name: 'Harrogate',
@@ -78,6 +88,7 @@ const locations = [
       'An elegant spa town with a premium business address. Popular with professional services, finance, and boutique agencies.',
     spaces: 8,
     services: ['Virtual Offices', 'Meeting Rooms', 'Serviced Offices'],
+    image: 'https://images.pexels.com/photos/9428514/pexels-photo-9428514.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
   {
     name: 'Stockton-on-Tees',
@@ -85,6 +96,7 @@ const locations = [
       'Part of the Tees Valley regeneration. Cost-effective workspace with strong logistics and a growing entrepreneurial scene.',
     spaces: 4,
     services: ['Virtual Offices', 'Meeting Rooms', 'Serviced Offices'],
+    image: 'https://images.pexels.com/photos/35612934/pexels-photo-35612934.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
 ];
 
@@ -119,38 +131,43 @@ export default function Locations() {
             {locations.map((loc) => (
               <div
                 key={loc.name}
-                className="group rounded-2xl border border-slate-100 bg-white p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                className="group rounded-2xl border border-slate-100 bg-white overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
               >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-brand-50 flex items-center justify-center">
-                      <MapPin className="w-5 h-5 text-brand-700" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-slate-900">{loc.name}</h3>
-                      <p className="text-sm text-slate-500">{loc.spaces} spaces available</p>
+                <div className="relative h-48 overflow-hidden">
+                  <div className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-transform duration-500" style={{ backgroundImage: `url('${loc.image}')` }} />
+                </div>
+                <div className="p-8">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-brand-50 flex items-center justify-center">
+                        <MapPin className="w-5 h-5 text-brand-700" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-slate-900">{loc.name}</h3>
+                        <p className="text-sm text-slate-500">{loc.spaces} spaces available</p>
+                      </div>
                     </div>
                   </div>
+                  <p className="text-slate-600 leading-relaxed mb-5">{loc.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {loc.services.map((s) => (
+                      <span
+                        key={s}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-50 text-slate-600 text-xs font-medium border border-slate-100"
+                      >
+                        <Building2 className="w-3 h-3" />
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-1.5 text-brand-700 font-semibold hover:text-brand-800 transition-colors"
+                  >
+                    Enquire in {loc.name}
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
                 </div>
-                <p className="text-slate-600 leading-relaxed mb-5">{loc.description}</p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {loc.services.map((s) => (
-                    <span
-                      key={s}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-slate-50 text-slate-600 text-xs font-medium border border-slate-100"
-                    >
-                      <Building2 className="w-3 h-3" />
-                      {s}
-                    </span>
-                  ))}
-                </div>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-1.5 text-brand-700 font-semibold hover:text-brand-800 transition-colors"
-                >
-                  Enquire in {loc.name}
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
               </div>
             ))}
           </div>

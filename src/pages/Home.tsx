@@ -49,10 +49,10 @@ const benefits = [
 ];
 
 const locations = [
-  { name: 'Manchester', count: '45 spaces' },
-  { name: 'Leeds', count: '32 spaces' },
-  { name: 'Newcastle', count: '24 spaces' },
-  { name: 'Sheffield', count: '18 spaces' },
+  { name: 'Manchester', count: '45 spaces', image: 'https://images.pexels.com/photos/27878164/pexels-photo-27878164.jpeg?auto=compress&cs=tinysrgb&w=800' },
+  { name: 'Leeds', count: '32 spaces', image: 'https://images.pexels.com/photos/30389574/pexels-photo-30389574.jpeg?auto=compress&cs=tinysrgb&w=800' },
+  { name: 'Newcastle', count: '24 spaces', image: 'https://images.pexels.com/photos/35113644/pexels-photo-35113644.jpeg?auto=compress&cs=tinysrgb&w=800' },
+  { name: 'Sheffield', count: '18 spaces', image: 'https://images.pexels.com/photos/12698033/pexels-photo-12698033.jpeg?auto=compress&cs=tinysrgb&w=800' },
 ];
 
 export default function Home() {
@@ -192,7 +192,8 @@ export default function Home() {
                 className="group relative overflow-hidden rounded-2xl bg-slate-900 aspect-[4/3] hover:shadow-xl transition-all"
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-slate-900/20 z-10" />
-                <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/1170412/pexels-photo-1170412.jpeg?auto=compress&cs=tinysrgb&w=800')] bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-black/30 z-10" />
+                <div className="absolute inset-0 bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-500" style={{ backgroundImage: `url('${loc.image}')` }} />
                 <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
                   <div className="flex items-center gap-2 text-white/80 text-sm mb-1">
                     <MapPin className="w-4 h-4" />
