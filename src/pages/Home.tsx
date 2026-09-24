@@ -55,15 +55,6 @@ const locations = [
   { name: 'Sheffield', count: '18 spaces' },
 ];
 
-const partners = [
-  'Regus',
-  'WeWork',
-  'Workspace Group',
-  'Citibase',
-  'BizSpace',
-  'Orega',
-];
-
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
@@ -95,22 +86,6 @@ export default function Home() {
                 Browse Locations
               </Link>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Trust bar */}
-      <section className="bg-slate-50 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <p className="text-center text-sm font-medium text-slate-500 uppercase tracking-wider mb-4">
-            We work with leading workspace providers
-          </p>
-          <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
-            {partners.map((p) => (
-              <span key={p} className="text-slate-400 font-semibold text-sm tracking-wide">
-                {p}
-              </span>
-            ))}
           </div>
         </div>
       </section>

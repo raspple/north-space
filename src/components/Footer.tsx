@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Building2, Mail, Phone, MapPin } from 'lucide-react';
+import { Building2, Mail } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -40,16 +40,8 @@ export default function Footer() {
             <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Contact</h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2">
-                <Phone className="w-4 h-4 mt-0.5 text-brand-400 shrink-0" />
-                <span>0191 123 4567</span>
-              </li>
-              <li className="flex items-start gap-2">
                 <Mail className="w-4 h-4 mt-0.5 text-brand-400 shrink-0" />
                 <span>hello@northspace.co.uk</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 mt-0.5 text-brand-400 shrink-0" />
-                <span>Newcastle upon Tyne, UK</span>
               </li>
             </ul>
           </div>

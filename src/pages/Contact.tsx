@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+import { Mail, Clock, Send } from 'lucide-react';
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -43,24 +43,10 @@ export default function Contact() {
                 <h3 className="text-xl font-bold text-slate-900 mb-6">Contact Details</h3>
                 <ul className="space-y-5">
                   <li className="flex items-start gap-3">
-                    <Phone className="w-5 h-5 text-brand-600 mt-0.5 shrink-0" />
-                    <div>
-                      <p className="font-medium text-slate-900">Phone</p>
-                      <p className="text-slate-600">0191 123 4567</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
                     <Mail className="w-5 h-5 text-brand-600 mt-0.5 shrink-0" />
                     <div>
                       <p className="font-medium text-slate-900">Email</p>
                       <p className="text-slate-600">hello@northspace.co.uk</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 text-brand-600 mt-0.5 shrink-0" />
-                    <div>
-                      <p className="font-medium text-slate-900">Address</p>
-                      <p className="text-slate-600">Suite 12, Baltic Business Centre<br />Newcastle upon Tyne, NE1 3DX</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-3">
