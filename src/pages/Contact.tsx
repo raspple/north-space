@@ -8,6 +8,8 @@ export default function Contact() {
     phone: '',
     company: '',
     serviceInterest: '',
+    urgency: '',
+    referralSource: '',
     message: '',
   });
 
@@ -143,6 +145,42 @@ export default function Contact() {
                       <option value="serviced_office">Serviced Office</option>
                       <option value="general">General Enquiry</option>
                     </select>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label htmlFor="urgency" className="block text-sm font-medium text-slate-700 mb-1">How quickly do you need this?</label>
+                      <select
+                        id="urgency"
+                        name="urgency"
+                        value={form.urgency}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900 bg-white"
+                      >
+                        <option value="">Please select...</option>
+                        <option value="asap">ASAP</option>
+                        <option value="1_month">Within 1 month</option>
+                        <option value="3_months">Within 3 months</option>
+                        <option value="researching">Just researching</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label htmlFor="referralSource" className="block text-sm font-medium text-slate-700 mb-1">How did you hear about us?</label>
+                      <select
+                        id="referralSource"
+                        name="referralSource"
+                        value={form.referralSource}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 outline-none transition-all text-slate-900 bg-white"
+                      >
+                        <option value="">Please select...</option>
+                        <option value="google">Google Search</option>
+                        <option value="social">Social Media</option>
+                        <option value="recommendation">Recommendation</option>
+                        <option value="existing_customer">Existing Customer</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
                   </div>
 
                   <div>
